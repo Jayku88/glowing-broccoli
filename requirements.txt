@@ -1,1 +1,2 @@
-tensorflow=2.6.0=gpu_py39he88c5ba_0
+tensorflow
+opencv-python
