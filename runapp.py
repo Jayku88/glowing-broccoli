@@ -1,12 +1,3 @@
-from streamlit.scriptrunner.script_run_context import get_script_run_ctx
-from streamlit.server.server import Server
-
-def _get_session():
-    session_id = get_script_run_ctx().session_id
-    session = Server.get_current().get_session_by_id(session_id)
-    if session is None:
-        raise RuntimeError("Couldn't get your Streamlit Session object.")
-    return str(session)[50:64]
 import tensorflow as tf
 model = tf.keras.models.load_model('newmodel1_feb_3.h5')
 import streamlit as st
