@@ -1,5 +1,5 @@
 import tensorflow as tf
-model = tf.keras.models.load_model('newmodel1_feb_2.h5')
+model = tf.keras.models.load_model('newmodel1_feb_3.h5')
 import streamlit as st
 st.title("Skin Disease Classification")
 st.write("This is a simple image classification web app to predict skin diseases into (0: Seborrheic keratosis, 1: Squamous cell carcinoma, 2: Vascular lesion)")
