@@ -63,9 +63,21 @@ st.write("Upload a satellite image and the model will extract road regions.")
 file = st.file_uploader("Please upload a satellite image", type=["jpg", "png", "jpeg"])
 
 # Image preprocessing + prediction
+# def preprocess_image(image_data, target_size=(512, 512)):
+#     image_array = np.array(image_data)           # Convert to NumPy array first
+#     image_array = image_array / 255.0 
+#     return image_array
+
 def preprocess_image(image_data, target_size=(512, 512)):
-    image_array = np.array(image_data)           # Convert to NumPy array first
-    image_array = image_array / 255.0 
+    # Ensure image is RGB
+    image_data = image_data.convert('RGB')
+    
+    # Resize image
+    image_data = image_data.resize(target_size)
+    
+    # Convert to NumPy array and normalize
+    image_array = np.array(image_data).astype(np.float32) / 255.0  # (512, 512, 3)
+    
     return image_array
 
 if file is not None:
