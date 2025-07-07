@@ -64,17 +64,9 @@ file = st.file_uploader("Please upload a satellite image", type=["jpg", "png", "
 
 # Image preprocessing + prediction
 def preprocess_image(image_data, target_size=(512, 512)):
-    image = ImageOps.fit(image_data, target_size, method=Image.Resampling.LANCZOS)
-    image_array = np.asarray(image).astype(np.float32) / 255.0  # Normalize
-    #image_array = np.expand_dims(image_array, axis=0)  # Add batch dimension
+    img = img / 255.0  
+    image_array=np.array(img)
     return image_array
-
-# def postprocess_mask(mask):
-#     # Assuming mask is (1, H, W, 1) with values 0-1
-#     mask = tf.squeeze(mask, axis=0)     # (H, W, 1)
-#     mask = tf.squeeze(mask, axis=-1)    # (H, W)
-#     mask = tf.cast(mask > 0.5, tf.uint8) * 255  # Threshold + scale to 0/255
-#     return mask.numpy()
 
 if file is not None:
     image = Image.open(file).convert("RGB")
@@ -84,7 +76,7 @@ if file is not None:
     prediction = model.predict(input_image)
     predictions = (predictions > 0.5).astype(np.uint8)
 
-    mask = postprocess_mask(prediction)
+    #mask = postprocess_mask(prediction)
 
     st.image(mask, caption='Predicted Road Mask', use_container_width=True, clamp=True)
 
