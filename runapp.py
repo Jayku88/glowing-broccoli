@@ -77,6 +77,7 @@ def preprocess_image(image_data, target_size=(512, 512)):
     
     # Convert to NumPy array and normalize
     image_array = np.array(image_data).astype(np.float32) / 255.0  # (512, 512, 3)
+    input_batch = np.expand_dims(input_image, 0)
     
     return image_array
 
@@ -85,7 +86,7 @@ if file is not None:
     st.image(image, caption='Uploaded Image', use_container_width=True)
 
     input_image = preprocess_image(image)
-    input_batch = np.expand_dims(input_image, 0)
+    
     prediction = model.predict(input_image)
     predictions = (predictions > 0.5).astype(np.uint8)
 
