@@ -53,7 +53,7 @@ from PIL import Image, ImageOps
 import numpy as np
 
 # Load model
-model = tf.keras.models.load_model('your_model_name.h5')  # e.g., "road_segmentation_model.h5"
+model = tf.keras.models.load_model('newmodel1_feb_3.h5')  # e.g., "road_segmentation_model.h5"
 
 # UI
 st.title("Road Extraction using Semantic Segmentation")
