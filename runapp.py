@@ -92,7 +92,7 @@ if file is not None:
 
     #mask = postprocess_mask(prediction)
 
-    st.image(mask, caption='Predicted Road Mask', use_container_width=True, clamp=True)
+    st.image(predictions, caption='Predicted Road Mask', use_container_width=True, clamp=True)
 
 else:
     st.info("Please upload an image.")
