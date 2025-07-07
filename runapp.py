@@ -85,6 +85,7 @@ if file is not None:
     st.image(image, caption='Uploaded Image', use_container_width=True)
 
     input_image = preprocess_image(image)
+    input_batch = np.expand_dims(input_image, 0)
     prediction = model.predict(input_image)
     predictions = (predictions > 0.5).astype(np.uint8)
 
