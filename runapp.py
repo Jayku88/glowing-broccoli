@@ -92,9 +92,11 @@ if file is not None:
     # predictions = (prediction > 0.1).astype(np.uint8)
 
     prediction = model.predict(input_image)
-    predictions = (prediction > 0.5).astype(np.uint8)
-
-    mask = predictions.squeeze()          # shape: (512, 512)
+    #predictions = (prediction > 0.5).astype(np.uint8)
+    
+    print(prediction.shape)
+    mask = prediction.squeeze()          # shape: (512, 512)
+    print(mask.shape)
     mask = (mask * 255).astype(np.uint8)  # scale binary to [0, 255]
     mask_image = Image.fromarray(mask)
 
