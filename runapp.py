@@ -64,7 +64,7 @@ file = st.file_uploader("Please upload a satellite image", type=["jpg", "png", "
 
 # Image preprocessing + prediction
 def preprocess_image(image_data, target_size=(512, 512)):
-    img = image _data/ 255.0  
+    img = image_data/ 255.0  
     image_array=np.array(img)
     return image_array
 
