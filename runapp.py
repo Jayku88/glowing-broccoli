@@ -89,7 +89,7 @@ if file is not None:
     input_image = preprocess_image(image)
     
     prediction = model.predict(input_image)
-    predictions = (prediction > 0.5).astype(np.uint8)
+    predictions = (prediction > 0.1).astype(np.uint8)
 
     #mask = postprocess_mask(prediction)
 
