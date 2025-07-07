@@ -69,16 +69,17 @@ file = st.file_uploader("Please upload a satellite image", type=["jpg", "png", "
 #     return image_array
 
 def preprocess_image(image_data, target_size=(512, 512)):
-    # Ensure image is RGB
-    image_data = image_data.convert('RGB')
+    # # Ensure image is RGB
+    # image_data = image_data.convert('RGB')
     
-    # Resize image
-    image_data = image_data.resize(target_size)
+    # # Resize image
+    # image_data = image_data.resize(target_size)
     
-    # Convert to NumPy array and normalize
-    image_array = np.array(image_data).astype(np.float32) / 255.0  # (512, 512, 3)
+    # # Convert to NumPy array and normalize
+    # image_array = np.array(image_data).astype(np.float32) / 255.0  # (512, 512, 3)
+    # image_array = np.expand_dims(image_array, 0)
+    image_array = np.array(image_data / 255.0 )
     image_array = np.expand_dims(image_array, 0)
-    
     return image_array
 
 if file is not None:
