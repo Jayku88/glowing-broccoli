@@ -77,7 +77,7 @@ def preprocess_image(image_data, target_size=(512, 512)):
     
     # Convert to NumPy array and normalize
     image_array = np.array(image_data).astype(np.float32) / 255.0  # (512, 512, 3)
-    input_batch = np.expand_dims(image_array, 0)
+    image_array = np.expand_dims(image_array, 0)
     
     return image_array
 
