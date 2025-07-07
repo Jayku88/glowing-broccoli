@@ -53,7 +53,7 @@ from PIL import Image, ImageOps
 import numpy as np
 
 # Load model
-model = tf.keras.models.load_model('newmodel1_feb_3.h5')  # e.g., "road_segmentation_model.h5"
+model = tf.keras.models.load_model('attunet8c3dgpatch.h5')  # e.g., "road_segmentation_model.h5"
 
 # UI
 st.title("Road Extraction using Semantic Segmentation")
@@ -63,7 +63,7 @@ st.write("Upload a satellite image and the model will extract road regions.")
 file = st.file_uploader("Please upload a satellite image", type=["jpg", "png", "jpeg"])
 
 # Image preprocessing + prediction
-def preprocess_image(image_data, target_size=(224, 224)):
+def preprocess_image(image_data, target_size=(512, 512)):
     image = ImageOps.fit(image_data, target_size, method=Image.Resampling.LANCZOS)
     image_array = np.asarray(image).astype(np.float32) / 255.0  # Normalize
     image_array = np.expand_dims(image_array, axis=0)  # Add batch dimension
