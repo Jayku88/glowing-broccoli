@@ -125,7 +125,7 @@ if file is not None:
     # Display result only
     col1, col2, col3 = st.columns([1, 2, 1])  # Center the image in the middle column
     with col2:
-        st.image(mask_image, caption='Predicted Road Mask', use_column_width=True)
+        st.image(mask_image, caption='Predicted Road Mask', use_container_width=True)
 else:
     st.info("Please upload an image.")
 
