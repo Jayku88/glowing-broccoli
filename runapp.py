@@ -47,47 +47,86 @@
 #     st.write('Probability predicted for Squamous cell carcinoma',prediction[0][1])
 #     st.write('Probability predicted for Vacular lesion',prediction[0][2])
 
+# import tensorflow as tf
+# import streamlit as st
+# from PIL import Image, ImageOps
+# import numpy as np
+
+# # Load model
+# model = tf.keras.models.load_model('attunet8c3dgpatch.h5',compile=False)  # e.g., "road_segmentation_model.h5"
+
+# # UI
+# st.title("Road Extraction using Semantic Segmentation")
+# st.write("Upload a satellite image and the model will extract road regions.")
+
+# # File uploader
+# file = st.file_uploader("Please upload a satellite image", type=["jpg", "png", "jpeg"])
+
+# def preprocess_image(image_data, target_size=(512, 512)):
+#     # Ensure image is RGB
+#     image_data = image_data.convert('RGB')
+    
+#     # Resize image
+#     image_data = image_data.resize(target_size)
+    
+#     # Convert to NumPy array and normalize
+#     image_array = np.array(image_data).astype(np.float32) / 255.0  # (512, 512, 3)
+#     image_array = np.expand_dims(image_array, 0)
+#     return image_array
+
+# if file is not None:
+#     image = Image.open(file).convert("RGB")
+#     st.image(image, caption='Uploaded Image', use_container_width=True)
+#     input_image = preprocess_image(image)
+#     prediction = model.predict(input_image)
+    
+    
+#     print(prediction.shape)
+#     mask = prediction.squeeze()          # shape: (512, 512)
+#     print(mask.shape)
+#     mask = (mask * 255).astype(np.uint8)  # scale binary to [0, 255]
+#     mask_image = Image.fromarray(mask)
+#     st.image(prediction, caption='Predicted Road Mask', use_container_width=True)
+
+# else:
+#     st.info("Please upload an image.")
+
 import tensorflow as tf
 import streamlit as st
 from PIL import Image, ImageOps
 import numpy as np
 
 # Load model
-model = tf.keras.models.load_model('attunet8c3dgpatch.h5',compile=False)  # e.g., "road_segmentation_model.h5"
+model = tf.keras.models.load_model('attunet8c3dgpatch.h5', compile=False)
 
 # UI
+st.set_page_config(layout="centered")
 st.title("Road Extraction using Semantic Segmentation")
-st.write("Upload a satellite image and the model will extract road regions.")
+st.write("Upload a satellite image to extract road regions using our deep learning model.")
 
 # File uploader
-file = st.file_uploader("Please upload a satellite image", type=["jpg", "png", "jpeg"])
+file = st.file_uploader("Upload a satellite image", type=["jpg", "png", "jpeg"])
 
 def preprocess_image(image_data, target_size=(512, 512)):
-    # Ensure image is RGB
     image_data = image_data.convert('RGB')
-    
-    # Resize image
     image_data = image_data.resize(target_size)
-    
-    # Convert to NumPy array and normalize
-    image_array = np.array(image_data).astype(np.float32) / 255.0  # (512, 512, 3)
-    image_array = np.expand_dims(image_array, 0)
-    return image_array
+    image_array = np.array(image_data).astype(np.float32) / 255.0
+    return np.expand_dims(image_array, axis=0)
 
 if file is not None:
     image = Image.open(file).convert("RGB")
-    st.image(image, caption='Uploaded Image', use_container_width=True)
     input_image = preprocess_image(image)
-    prediction = model.predict(input_image)
-    
-    
-    print(prediction.shape)
-    mask = prediction.squeeze()          # shape: (512, 512)
-    print(mask.shape)
-    mask = (mask * 255).astype(np.uint8)  # scale binary to [0, 255]
-    mask_image = Image.fromarray(mask)
-    st.image(prediction, caption='Predicted Road Mask', use_container_width=True)
 
+    prediction = model.predict(input_image)
+    mask = prediction.squeeze()  # shape: (512, 512)
+    mask = (mask * 255).astype(np.uint8)
+    mask_image = Image.fromarray(mask)
+
+    # Display result only
+    col1, col2, col3 = st.columns([1, 2, 1])  # Center the image in the middle column
+    with col2:
+        st.image(mask_image, caption='Predicted Road Mask', use_column_width=True)
 else:
     st.info("Please upload an image.")
+
 
